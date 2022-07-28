@@ -15,7 +15,8 @@ const Play = () => {
             id: generarId(),
             currentBet: calculateBet(INITIAL_SUCCESSION),
             succession: INITIAL_SUCCESSION,
-            history: []
+            history: [],
+            count: 0,
         }
 
         setHands([...hands, hand])
@@ -44,6 +45,7 @@ const Play = () => {
         const index = copiedArray.findIndex((hand => hand.id === id))
         const element = copiedArray[index]
 
+        element.count = element.count - element.currentBet * CHIP_VALUE
         element.history.push([...element.succession])
         element.succession.push(element.currentBet)
         element.currentBet = calculateBet(element.succession)
@@ -63,14 +65,17 @@ const Play = () => {
 
         const copiedArray = [...hands]
         const index = copiedArray.findIndex((hand => hand.id === id))
-        copiedArray[index].history.push([...copiedArray[index].succession])
+        const element = copiedArray[index]
 
-        if (!copiedArray[index].succession.length) {
-            copiedArray[index].succession = INITIAL_SUCCESSION
+        element.count = element.count + element.currentBet * CHIP_VALUE
+        element.history.push([...element.succession])
+
+        if (!element.succession.length) {
+            element.succession = INITIAL_SUCCESSION
         } else {
-            copiedArray[index].succession = reduceSuccesion(copiedArray[index].succession)
+            element.succession = reduceSuccesion(element.succession)
         }
-        copiedArray[index].currentBet = calculateBet(copiedArray[index].succession)
+        element.currentBet = calculateBet(element.succession)
 
         setHands(copiedArray)
     }
@@ -123,6 +128,7 @@ const Play = () => {
                             <div key={hand.id} className='bg-white rounded-md border-b-slate-500 shadow-md p-6'>
                                 <header className='flex justify-between'>
                                     <p>{`${hand.succession.length ? hand.currentBet + ' fichas' : 'Apuesta completada'} `}</p>
+                                    <p>{`Balance: ${hand.count}`}</p>
                                     <div>
                                         <button className='mx-1'>
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
