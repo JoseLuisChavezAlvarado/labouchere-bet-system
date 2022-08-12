@@ -117,7 +117,7 @@ const Play = () => {
             <nav className="flex justify-between bg-sky-500 p-8">
                 <h2 className='font-bold text-2xl text-white'>Labuocher Betting App</h2>
                 <div className='my-auto'>
-                    <Link to={'/'}>Volver a Inicio</Link>
+                    <Link className="text-white" to={'/'}>Volver a Inicio</Link>
                 </div>
             </nav>
             <main className='p-16'>
