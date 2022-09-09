@@ -5,7 +5,7 @@ import generarId from '../helpers/generarId';
 const Play = () => {
 
     const INITIAL_SUCCESSION = [1,1,1,1,1 ]
-    const CHIP_VALUE = 40
+    const CHIP_VALUE = 20
 
     const [hands, setHands] = useState([])
 
